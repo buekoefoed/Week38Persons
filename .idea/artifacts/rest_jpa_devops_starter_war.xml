@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="rest-jpa-devops-starter:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>rest-jpa-devops-starter</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="rest-jpa-devops-starter-1.0.1.war">
+      <element id="artifact" artifact-name="rest-jpa-devops-starter:war exploded" />
+    </root>
+  </artifact>
+</component>
