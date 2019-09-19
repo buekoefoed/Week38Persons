@@ -1,13 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="rest-jpa-devops-starter:war exploded">
-    <output-path>$PROJECT_DIR$/target/rest-jpa-devops-starter-1.0.1</output-path>
-    <properties id="maven-jee-properties">
-      <options>
-        <exploded>true</exploded>
-        <module>rest-jpa-devops-starter</module>
-        <packaging>war</packaging>
-      </options>
-    </properties>
+  <artifact type="exploded-war" name="Persons_exploded">
+    <output-path>$PROJECT_DIR$/classes/artifacts/Persons_exploded</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -54,9 +47,6 @@
           <element id="library" level="project" name="Maven: org.glassfish.grizzly:grizzly-framework:2.4.4" />
           <element id="library" level="project" name="Maven: jakarta.ws.rs:jakarta.ws.rs-api:2.1.5" />
         </element>
-      </element>
-      <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/target/rest-jpa-devops-starter-1.0.1/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="rest-jpa-devops-starter/web/Web" />
     </root>

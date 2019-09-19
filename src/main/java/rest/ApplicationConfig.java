@@ -1,5 +1,8 @@
 package rest;
 
+import exceptions.GenericExceptionMapper;
+import exceptions.PersonNotFoundExceptionMapper;
+
 import java.util.Set;
 import javax.ws.rs.core.Application;
 
@@ -20,6 +23,8 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(GenericExceptionMapper.class);
+        resources.add(PersonNotFoundExceptionMapper.class);
         resources.add(org.glassfish.jersey.server.wadl.internal.WadlResource.class);
         resources.add(PersonResource.class);
     }

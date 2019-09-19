@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="rest-jpa-devops-starter" target="1.7" />
+      <module name="rest-jpa-devops-starter" target="8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

@@ -5,7 +5,10 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Entity
-@NamedQuery(name = "Person.deleteAllRows", query = "DELETE from Person")
+@NamedQueries({
+        @NamedQuery(name = "Person.getAllRows", query = "select p from Person p"),
+        @NamedQuery(name = "Person.deleteAllRows", query = "DELETE from Person")
+})
 public class Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -19,7 +22,7 @@ public class Person implements Serializable {
     private Date created;
     @Temporal(TemporalType.DATE)
     private Date lastEdited;
-    
+
     public Person() {
     }
 
