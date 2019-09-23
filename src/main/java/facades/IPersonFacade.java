@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IPersonFacade {
 
-    Person addPerson(String fName, String lName, String phone);
+    Person addPerson(String fName, String lName, String phone, String street, String zip, String city);
 
     Person deletePerson(long id) throws PersonNotFoundException;
 

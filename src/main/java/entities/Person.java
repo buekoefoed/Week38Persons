@@ -6,8 +6,14 @@ import javax.persistence.*;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "Person.getAllRows", query = "select p from Person p"),
-        @NamedQuery(name = "Person.deleteAllRows", query = "DELETE from Person")
+        @NamedQuery(
+                name = "Person.getAllRows",
+                query = "select p from Person p"
+        ),
+        @NamedQuery(
+                name = "Person.deleteAllRows",
+                query = "delete from Person"
+        )
 })
 public class Person implements Serializable {
 
@@ -22,6 +28,9 @@ public class Person implements Serializable {
     private Date created;
     @Temporal(TemporalType.DATE)
     private Date lastEdited;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Address address;
+
 
     public Person() {
     }
@@ -32,6 +41,20 @@ public class Person implements Serializable {
         this.phone = phone;
         this.created = new Date();
         this.lastEdited = this.created;
+    }
+
+    public Person(String firstName, String lastName, String phone, String street, String zip, String city) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.created = new Date();
+        this.lastEdited = this.created;
+        this.address = new Address(street, zip, city);
+    }
+
+    public void addAddress(Address a) {
+        this.address = a;
+        a.setPerson(this);
     }
 
     public Long getId() {
@@ -80,5 +103,13 @@ public class Person implements Serializable {
 
     public void setLastEdited() {
         this.lastEdited = new Date();
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

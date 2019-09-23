@@ -10,24 +10,39 @@ public class PersonDTO {
     private String fName;
     private String lName;
     private String phone;
+    private String street;
+    private String zip;
+    private String city;
 
     public PersonDTO() {}
 
-    public PersonDTO(Person p) {
-        this.fName = p.getFirstName();
-        this.lName = p.getLastName();
-        this.phone = p.getPhone();
-        this.id = p.getId();
+    public PersonDTO(Person person) {
+        if (person.getId() == null){
+            this.id = 0;
+        }else {
+            this.id = person.getId();
+        }
+        this.fName = person.getFirstName();
+        this.lName = person.getLastName();
+        this.phone = person.getPhone();
+        this.street = person.getAddress().getStreet();
+        this.zip = person.getAddress().getZip();
+        this.city = person.getAddress().getCity();
     }
 
-    public PersonDTO(String fn,String ln, String phone) {
+    public PersonDTO(String fn, String ln, String phone) {
         this.fName = fn;
         this.lName = ln;
         this.phone = phone;
     }
 
-    public long getId() {
-        return id;
+    public PersonDTO(String fName, String lName, String phone, String street, String zip, String city) {
+        this.fName = fName;
+        this.lName = lName;
+        this.phone = phone;
+        this.street = street;
+        this.zip = zip;
+        this.city = city;
     }
 
     public String getfName() {
@@ -52,6 +67,30 @@ public class PersonDTO {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     @Override

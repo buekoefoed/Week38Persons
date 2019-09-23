@@ -1,10 +1,12 @@
 package facades;
 
+import dtomappers.PersonDTO;
 import entities.Person;
 import exceptions.PersonNotFoundException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,9 +48,9 @@ public class PersonFacade implements IPersonFacade {
     }
 
     @Override
-    public Person addPerson(String fName, String lName, String phone) {
+    public Person addPerson(String fName, String lName, String phone, String street, String zip, String city) {
         EntityManager em = getEntityManager();
-        Person person = new Person(fName, lName, phone);
+        Person person = new Person(fName, lName, phone, street, zip, city);
         try {
             em.getTransaction().begin();
             em.persist(person);
@@ -107,6 +109,9 @@ public class PersonFacade implements IPersonFacade {
         person.setLastName(p.getLastName());
         person.setPhone(p.getPhone());
         person.setLastEdited();
+        person.getAddress().setStreet(p.getAddress().getStreet());
+        person.getAddress().setZip(p.getAddress().getZip());
+        person.getAddress().setCity(p.getAddress().getCity());
         try {
             em.getTransaction().begin();
             em.merge(person);

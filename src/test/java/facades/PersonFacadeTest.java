@@ -1,5 +1,6 @@
 package facades;
 
+import entities.Address;
 import exceptions.PersonNotFoundException;
 import utils.EMF_Creator;
 import entities.Person;
@@ -67,6 +68,10 @@ public class PersonFacadeTest {
         p2 = new Person("Jon", "Bertelsen", "54832910");
         p3 = new Person("Arne", "Wonnegut", "23519965");
 
+        p1.addAddress(new Address("Malmøvej 17", "3700", "Rønne"));
+        p2.addAddress(new Address("Ndr Frihavnsgade 28", "2100", "København"));
+        p3.addAddress(new Address("Vigerslev Allé 68", "2500", "København"));
+
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Person.deleteAllRows").executeUpdate();
@@ -107,7 +112,9 @@ public class PersonFacadeTest {
 
     @Test
     void testAddPerson() {
-        Person person = facade.addPerson("Jon", "Snow", "80081135");
+        Person person = facade.addPerson(
+                "Jon", "Snow", "80081135",
+                "High Street 1", "0000","Kingslanding");
         assertNotNull(person.getId(),
                 "If ID is NotNull then DB must have assigned an ID");
     }

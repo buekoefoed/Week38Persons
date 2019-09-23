@@ -1,6 +1,8 @@
 package rest;
 
 import dtomappers.PersonDTO;
+import dtomappers.PersonsDTO;
+import entities.Address;
 import entities.Person;
 import utils.EMF_Creator;
 import io.restassured.RestAssured;
@@ -79,6 +81,10 @@ class PersonResourceTest {
         p2 = new Person("Jon", "Bertelsen", "54832910");
         p3 = new Person("Arne", "Wonnegut", "23519965");
 
+        p1.addAddress(new Address("Malmøvej 17", "3700", "Rønne"));
+        p2.addAddress(new Address("Ndr Frihavnsgade 28", "2100", "København"));
+        p3.addAddress(new Address("Vigerslev Allé 68", "2500", "København"));
+
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Person.deleteAllRows").executeUpdate();
@@ -151,7 +157,12 @@ class PersonResourceTest {
                 .get("/person/id/" + p1.getId()).then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("fName", equalTo("Matias"));
+                .body("fName", equalTo("Matias"))
+                .body("lName", equalTo("Koefoed"))
+                .body("phone", equalTo("60175242"))
+                .body("street", equalTo("Malmøvej 17"))
+                .body("zip", equalTo("3700"))
+                .body("city", equalTo("Rønne"));
     }
 
     @Test
@@ -166,9 +177,12 @@ class PersonResourceTest {
 
     @Test
     void TestAddPerson() {
+        Person person = new Person("Bart", "Simpson", "66669999");
+        person.addAddress(new Address("742 Evergreen Terrace", "65808", "Springfield"));
+
         given()
                 .contentType("application/json")
-                .body(new PersonDTO("Bart", "Simpson", "66669999"))
+                .body(new PersonDTO(person))
                 .when()
                 .post("/person").then()
                 .assertThat()
@@ -176,22 +190,31 @@ class PersonResourceTest {
                 .body("id", notNullValue())
                 .body("fName", equalTo("Bart"))
                 .body("lName", equalTo("Simpson"))
-                .body("phone", equalTo("66669999"));
+                .body("phone", equalTo("66669999"))
+                .body("street", equalTo("742 Evergreen Terrace"))
+                .body("zip", equalTo("65808"))
+                .body("city", equalTo("Springfield"));
     }
 
     @Test
     void TestEditPerson() {
+        Person person = new Person("Matias Bue", "Koefoed", "56957997");
+        person.addAddress(new Address("Betty Nansens Allé 21", "2000", "Frederiksberg"));
+
         given()
                 .contentType("application/json")
-                .body(new PersonDTO("Matias Bue", "Koefoed", "56957997"))
+                .body(new PersonDTO(person))
                 .when()
                 .put("/person/" + p1.getId()).then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
-                //.body("id", equalTo(p1.getId().toString()))
+                .body("id", equalTo(p1.getId().intValue()))
                 .body("fName", equalTo("Matias Bue"))
                 .body("lName", equalTo("Koefoed"))
-                .body("phone", equalTo("56957997"));
+                .body("phone", equalTo("56957997"))
+                .body("street", equalTo("Betty Nansens Allé 21"))
+                .body("zip", equalTo("2000"))
+                .body("city", equalTo("Frederiksberg"));
     }
 
     @Test
@@ -224,10 +247,13 @@ class PersonResourceTest {
                 .delete("/person/" + p1.getId()).then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
-                //.body("id", equalTo(p1.getId().toString()))
+                .body("id", equalTo(p1.getId().intValue()))
                 .body("fName", equalTo("Matias"))
                 .body("lName", equalTo("Koefoed"))
-                .body("phone", equalTo("60175242"));
+                .body("phone", equalTo("60175242"))
+                .body("street", equalTo("Malmøvej 17"))
+                .body("zip", equalTo("3700"))
+                .body("city", equalTo("Rønne"));
 
         personDTOS = given()
                 .contentType("application/json")
